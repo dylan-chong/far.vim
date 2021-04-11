@@ -44,7 +44,7 @@ def search(ctx, args, cmdargs):
 
     if source == 'rg' or source == 'rgnvim' :
         # Break the globbing stuff because `-g` breaks ripgrep's gitignore feature
-        command = f"rg --files --ignore --hidden -g '!.git'"
+        command = f'rg --files --ignore'
         logger.debug(f'Globbing with ripgrep: {command}')
         with tempfile.NamedTemporaryFile(mode='w', delete=False, encoding='utf-8') as fp:
             fp.write(os.popen(command).read())
