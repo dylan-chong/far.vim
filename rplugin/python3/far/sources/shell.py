@@ -43,9 +43,11 @@ def search(ctx, args, cmdargs):
     rules = file_mask.split(',')
 
     if source == 'rg' or source == 'rgnvim' :
-        logger.debug(f'Globbing with ripgrep: rg --files {rg_rules_glob(rules)} {rg_ignore_globs(ignore_files)}')
+        # Break the globbing stuff because `-g` breaks ripgrep's gitignore feature
+        command = f'rg --files --ignore'
+        logger.debug(f'Globbing with ripgrep: {command}')
         with tempfile.NamedTemporaryFile(mode='w', delete=False, encoding='utf-8') as fp:
-            fp.write(os.popen(f'rg --files {rg_rules_glob(rules)} {rg_ignore_globs(ignore_files)}').read())
+            fp.write(os.popen(command).read())
 
     else:
         ignore_rules = []
